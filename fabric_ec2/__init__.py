@@ -1,7 +1,7 @@
 from boto import ec2
 
 
-def get_instances_for_tags(tags, ec2_regions=None):
+def get_instances_for_tags(tags, ec2_regions=None, aws_key=None, aws_secret=None):
     """ Returns a list of hosts, matching the given tags/ec2_regions.
     """
     # Use default regions (taken from boto) if user didn't specify a list
@@ -18,7 +18,9 @@ def get_instances_for_tags(tags, ec2_regions=None):
 
     host_list = []
     for region in ec2_regions:
-        conn = ec2.connect_to_region(region)
+        conn = ec2.connect_to_region(region,
+            aws_access_key_id=aws_key,
+            aws_secret_access_key=aws_secret)
         reservations = conn.get_all_instances(None, tag_filter)
         for res in reservations:
             for instance in res.instances:
