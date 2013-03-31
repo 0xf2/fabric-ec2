@@ -35,7 +35,9 @@ Usage
 
     def hostname():
         run('hostname')
+```
 
+```
     $ fab restart_db
     $ fab restart_web
     $ fab hostname --roles web
