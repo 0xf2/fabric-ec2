@@ -4,7 +4,9 @@ You can use [EC2 Tags](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserG
 
 This helper class lets you use these tags on conjunction with Fabric's role definitions, by dynamically querying the EC2 API to find the instances that have been assigned a particular role.
 
-Usage::
+Usage
+=====
+```python
     from fabric.api import run, sudo, env
     from fabric_ec2 import EC2TagManager
 
@@ -37,3 +39,4 @@ Usage::
     $ fab restart_db
     $ fab restart_web
     $ fab hostname --roles web
+```
