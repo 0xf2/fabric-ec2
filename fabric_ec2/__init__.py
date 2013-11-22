@@ -30,7 +30,7 @@ class EC2TagManager:
             tag_filter['tag:%s' % k] = v
         return tag_filter
 
-    def get_instances(self, instance_attr='public_dns_name', **kwargs):
+    def get_instances(self, instance_attr='public_dns_name', only_running=True, **kwargs):
         """ Return instances that match the given tags.
 
             Keyword arguments:
@@ -53,6 +53,9 @@ class EC2TagManager:
             reservations = self.conn[region].get_all_instances(None, tag_filter)
             for res in reservations:
                 for instance in res.instances:
+                    if only_running and instance.state != 'running':
+                        continue
+
                     instance_value = getattr(instance, instance_attr)
                     if instance_value:
                         # Terminated/stopped instances will not have a public_dns_name
